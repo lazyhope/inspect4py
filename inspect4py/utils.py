@@ -727,7 +727,8 @@ def get_github_metadata(input_path: str) -> dict:
         remote_url = repo.remotes.origin.url
 
         # Extract owner and repo name from remote url
-        api_param = re.search(r".+github.com[:/](?P<param>.+).git", remote_url).group("param")
+        exp = r".+github.com[:/](?P<param>.+?)(\.git)?$"
+        api_param = re.search(exp, remote_url).group("param")
 
         # Call Github API to get the metadata
         api_url = f"https://api.github.com/repos/{api_param}"
